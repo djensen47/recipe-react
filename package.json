@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.2.5"
+    "@openapitools/openapi-generator-cli": "^2.2.5",
+    "@types/react-router-dom": "^5.1.7"
   }
 }
