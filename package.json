@@ -23,7 +23,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "generate-client": "openapi-generator-cli generate -i openapi-schemas/recipes-schema.yaml -g typescript-axios -o src/recipes/client --additional-properties=supportsES6=true,withInterfaces=true"
   },
   "eslintConfig": {
     "extends": [
