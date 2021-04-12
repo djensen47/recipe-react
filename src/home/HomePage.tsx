@@ -6,7 +6,7 @@ export const HomePage: React.FC = () => {
   let history = useHistory();
   return (
     <>
-      <Card gap="small" elevation="xlarge" background="light-1">
+      <Card gap="small" elevation="xlarge" background="light-1" width="medium">
         <CardHeader pad="medium" justify="center" background="brand">
           <Text weight="bold" size="large" >Recipes</Text>
         </CardHeader>
