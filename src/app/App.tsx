@@ -2,7 +2,7 @@ import React from 'react';
 import { grommet, Grommet } from 'grommet'
 import { AppRoutes } from './AppRoutes';
 import './App.css';
-import { PageLayout } from './common/components/PageLayout';
+import { PageLayout } from '../common/components/PageLayout';
 
 export const App: React.FC = () => {
   const theme = {
