@@ -1,11 +1,11 @@
 import { Bloc } from "@felangel/bloc";
 import { Recipe, RecipesApi } from "../client";
 
-enum RecipesEvent {
+export enum RecipesEvent {
   fetch = 'FETCH'
 }
 
-interface RecipesState {
+export interface RecipesState {
   //TODO: this should be it's own interface and not re-using the generated interface
   recipes?: Recipe[];
 }
