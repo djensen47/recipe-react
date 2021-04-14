@@ -5,6 +5,7 @@ import { RecipeDeleteEvent, RecipesBloc, RecipesEvent, RecipesFetchEvent, Recipe
 import { Recipe } from '../client';
 import RecipesContext from '../RecipesContext';
 import { RecipeListItem } from './RecipeListItem';
+import { RecipeDeleteDialog } from './RecipeDeleteDialog';
 
 export const RecipesList: React.FC = () => {
   const recipesBloc: RecipesBloc = useContext(RecipesContext);
@@ -40,16 +41,7 @@ export const RecipesList: React.FC = () => {
     <>
       <BlocBuilder bloc={recipesBloc} builder={recipeBuilder} />
       {recipeToDelete && (
-        <Layer onClickOutside={hideDelete} onEsc={hideDelete} position="top" margin={{top:"200px"}}>
-          <Box pad="medium" gap="small">
-            <Heading level={3} margin="none">Confirm</Heading>
-            <Text>Are you sure you want to delete <b>{recipeToDelete.name}</b>?</Text>
-          </Box>
-          <Box direction="row" pad="medium" gap="small" justify="end" align="center">
-            <Button label="Cancel" onClick={hideDelete}/>
-            <Button primary color="status-critical" label="Delete Recipe" onClick={deleteRecipe}/>
-          </Box>
-        </Layer>
+        <RecipeDeleteDialog recipe={recipeToDelete} onHide={hideDelete} onConfirm={deleteRecipe} />
       )}
     </>
   );

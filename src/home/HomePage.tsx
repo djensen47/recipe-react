@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, CardBody, CardHeader, Text, Markdown, Paragraph, CardFooter, Button } from 'grommet'
+import { Card, CardBody, CardHeader, Text, Markdown, Paragraph, CardFooter, Button, Box } from 'grommet'
 import { useHistory } from 'react-router-dom';
+import { Cafeteria, Restaurant } from 'grommet-icons';
 
 export const HomePage: React.FC = () => {
   let history = useHistory();
@@ -11,8 +12,12 @@ export const HomePage: React.FC = () => {
           <Text weight="bold" size="large" >Recipes</Text>
         </CardHeader>
         <CardBody pad="medium">
+          <Box justify="center" gap="medium" align="start" direction="row">
+            <Restaurant color="status-ok" size="xlarge"/>
+            <Cafeteria color="status-ok" size="xlarge"/>
+          </Box>
           <Paragraph>
-            Welcome to the Recipes demo application.
+            Welcome to the recipes demo application built with React.
           </Paragraph>
           <Markdown>{`
  Libraries used for this project:
