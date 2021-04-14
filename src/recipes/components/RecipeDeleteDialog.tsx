@@ -7,7 +7,6 @@ export const RecipeDeleteDialog: React.FC<{
   onHide: () => void,
   onConfirm: () => void
 }> = ({ recipe, onHide, onConfirm }) => (
-
   <Layer onClickOutside={onHide} onEsc={onHide} position="top" margin={{ top: "200px" }}>
     <Box pad="medium" gap="small">
       <Heading level={3} margin="none">Confirm</Heading>

@@ -1,5 +1,5 @@
-import React, { MouseEvent, MouseEventHandler, useState } from 'react';
-import { Box, Button, Layer, Text, ThemeContext } from 'grommet';
+import React, { MouseEvent, useState } from 'react';
+import { Box, Button, Text, ThemeContext } from 'grommet';
 import { Edit, Trash } from 'grommet-icons';
 import styled from 'styled-components';
 import { Recipe } from '../client';
@@ -22,7 +22,7 @@ export const RecipeListItem: React.FC<{
   };
 
   const handleClickEdit = (evt: MouseEvent<HTMLButtonElement>) => {
-    evt.stopPropagation;
+    evt.stopPropagation();
     onEdit(recipe);
   }
   // probably don't need this but nice to know it's easy to change Grommet's

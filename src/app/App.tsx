@@ -13,6 +13,10 @@ export const App: React.FC = () => {
       },
     },
     layer: {
+      border: {
+        radius: "8px",
+        intelligentRounding: true
+      },
       overlay: {
         background: "rgba(0, 0, 0, 0.25)"
       }
