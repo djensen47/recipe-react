@@ -1,24 +1,28 @@
 import React from 'react';
 import { grommet, Grommet } from 'grommet'
 import { AppRoutes } from './AppRoutes';
-import './App.css';
 import { PageLayout } from '../common/components/PageLayout';
+import { deepMerge } from 'grommet/utils';
+import './App.css';
 
 export const App: React.FC = () => {
   const theme = {
     global: {
       font: {
         family: 'Roboto',
-        size: '14px',
-        height: '20px',
       },
+    },
+    layer: {
+      overlay: {
+        background: "rgba(0, 0, 0, 0.25)"
+      }
     },
   };
 
   return (
-    <Grommet theme={grommet} themeMode="light" full>
+    <Grommet theme={deepMerge(grommet, theme)} themeMode="light" full>
       <PageLayout>
-        <AppRoutes/>
+        <AppRoutes />
       </PageLayout>
     </Grommet>
   );
