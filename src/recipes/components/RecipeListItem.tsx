@@ -16,6 +16,15 @@ export const RecipeListItem: React.FC<{
   const handleMouseOut = () => setShowButtons(false);
   const handleClick = () => setShowIngredients(!showIngredients);
 
+  const handleClickDelete = (evt: MouseEvent<HTMLButtonElement>) => {
+    evt.stopPropagation();
+    onDelete(recipe);
+  };
+
+  const handleClickEdit = (evt: MouseEvent<HTMLButtonElement>) => {
+    evt.stopPropagation;
+    onEdit(recipe);
+  }
   // probably don't need this but nice to know it's easy to change Grommet's
   // default styles without issue
   const TextNoBreak = styled(Text)`
@@ -43,15 +52,15 @@ export const RecipeListItem: React.FC<{
           </Box>
           {showButtons && (
             <Box direction="row" align="start" gap="small">
-              <Button plain icon={<Edit color="dark-6" />} onClick={() => onEdit(recipe)} />
-              <Button plain icon={<Trash color="dark-6" />} onClick={() => onDelete(recipe)} />
+              <Button plain icon={<Edit color="dark-6" />} onClick={handleClickEdit} />
+              <Button plain icon={<Trash color="dark-6" />} onClick={handleClickDelete} />
             </Box>
           )}
         </Box>
         {showIngredients && (
           <Box direction="row" gap="small" wrap={true} margin={{top:"small"}}>
             {recipe.ingredients?.map(ingredient => (
-              <Box pad={{vertical: "xxsmall", horizontal: "small"}} margin={{vertical: "xxsmall"}} flex="shrink" background="light-6" round="small">
+              <Box key={ingredient.name} pad={{vertical: "xxsmall", horizontal: "small"}} margin={{vertical: "xxsmall"}} flex="shrink" background="light-6" round="small">
                 <TextNoBreak size="xsmall" wordBreak="normal" truncate={false} >
                   {ingredient.name}
                 </TextNoBreak>
