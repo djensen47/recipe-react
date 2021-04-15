@@ -2,6 +2,7 @@ import { Box, Button, Card, CardBody, CardHeader, Text } from 'grommet';
 import { Add, LinkPrevious } from 'grommet-icons'
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import { Recipe } from '../client';
 import { RecipeDialog } from '../components/RecipeDialog';
 import { RecipesList } from '../components/RecipesList';
 
@@ -11,6 +12,9 @@ export const RecipeListPage: React.FC = () => {
 
   const handleHide = () => setShowDialog(false);
   const handleShow = () => setShowDialog(true);
+  const handleConfirm = (recipe: Recipe) => {
+    handleHide();
+  };
 
   return (
     <>

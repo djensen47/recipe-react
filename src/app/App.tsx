@@ -8,9 +8,19 @@ import './App.css';
 export const App: React.FC = () => {
   const theme = {
     global: {
+      focus: {
+        border: {
+          color: "brand"
+        }
+      },
       font: {
         family: 'Roboto',
       },
+      input: {
+        font: {
+          weight: 400
+        }
+      }
     },
     layer: {
       border: {
@@ -21,6 +31,23 @@ export const App: React.FC = () => {
         background: "rgba(0, 0, 0, 0.25)"
       }
     },
+    formField: {
+      round: "small",
+      border: {
+        // color: "brand",
+        side: "all",
+      },
+      focus: {
+        border: {
+          color: "brand"
+        }
+      },
+      label: {
+        margin: {
+          horizontal: "xsmall"
+        }
+      }
+    }
   };
 
   return (

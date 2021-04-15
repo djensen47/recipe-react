@@ -36,7 +36,7 @@ export const RecipeListItem: React.FC<{
   `;
 
   return (
-    <ThemeContext.Extend value={{global:{colors: {focus: "none"}}}}>
+    <ThemeContext.Extend value={{global:{focus: {border: {color: "none"}}}}}>
       <Box
         pad="medium"
         border={{ side: "bottom", color: "light-3" }}
@@ -44,6 +44,7 @@ export const RecipeListItem: React.FC<{
         onMouseEnter={handleMouseOver}
         onMouseLeave={handleMouseOut}
         onClick={handleClick}
+        focusIndicator={true}
       >
         <Box direction="row" justify="between">
           <Box direction="column">
