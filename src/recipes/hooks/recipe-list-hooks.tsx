@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { RecipeBloc, RecipeState, RecipeStatus } from '../blocs/RecipeBloc';
 import { RecipesBloc, RecipesFetchEvent } from '../blocs/RecipesBloc';
 import { Recipe } from '../client';
-import RecipesContext from '../RecipesContext';
+import { RecipeContext, RecipesContext } from '../RecipesContext';
 
 type UseRecipes = () => {
   recipes: Recipe[];
@@ -13,19 +14,34 @@ type UseRecipesActions = () => {
 
 export const useRecipeList: UseRecipes = () => {
   const recipesBloc: RecipesBloc = useContext(RecipesContext);
+  const recipeBloc: RecipeBloc = useContext(RecipeContext);
   const [recipes, setRecipes] = useState([] as Recipe[]);
-  recipesBloc.listen(state =>  setRecipes(state.recipes ?? []));
+  recipesBloc.listen(state => setRecipes(state.recipes ?? []));
 
   useEffect(() => {
     recipesBloc.add(new RecipesFetchEvent());
   }, []);
 
-  return {recipes: recipes};
+  let subscription = useMemo(() => {
+    return recipeBloc.listen(state => {
+      if (state.status === RecipeStatus.CREATED
+          || state.status === RecipeStatus.DELETED
+          || state.status == RecipeStatus.UPDATED) {
+          recipesBloc.add(new RecipesFetchEvent());
+      }
+    });
+  }, []);
+
+  useEffect(() => () => {
+    subscription.unsubscribe();
+  })
+
+  return { recipes: recipes };
 };
 
 export const useRecipeListActions: UseRecipesActions = () => {
   const recipesBloc: RecipesBloc = useContext(RecipesContext);
- 
+
   return {
     fetchRecipes: () => recipesBloc.add(new RecipesFetchEvent())
   }
