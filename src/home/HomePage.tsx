@@ -23,8 +23,7 @@ export const HomePage: React.FC = () => {
  Libraries used for this project:
 
  * Grommet for UI
- * Bloc for state management
- * Tsyringe for dependency injection`}
+ * Bloc for state management`}
           </Markdown>
 
         </CardBody>
