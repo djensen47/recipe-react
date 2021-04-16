@@ -5,16 +5,19 @@ import { useHistory } from 'react-router';
 import { Recipe } from '../client';
 import { RecipeDialog } from '../components/RecipeDialog';
 import { RecipesList } from '../components/RecipesList';
+import { useRecipeActions } from '../hooks/recipe-hooks';
 import { useRecipeListActions } from '../hooks/recipe-list-hooks';
 
 export const RecipeListPage: React.FC = () => {
-  let history = useHistory();
+  const history = useHistory();
   const [showDialog, setShowDialog] = useState(false);
   const {fetchRecipes} = useRecipeListActions();
+  const {createRecipe} = useRecipeActions();
 
   const handleHide = () => setShowDialog(false);
   const handleShow = () => setShowDialog(true);
   const handleConfirm = (recipe: Recipe) => {
+    createRecipe(recipe);
     handleHide();
   };
   const handleRefresh = () => fetchRecipes();
@@ -35,7 +38,7 @@ export const RecipeListPage: React.FC = () => {
         </CardBody>
       </Card>
       { showDialog && (
-        <RecipeDialog onHide={handleHide} onConfirm={handleHide} />
+        <RecipeDialog onHide={handleHide} onConfirm={handleConfirm} />
       )}
     </>
   )

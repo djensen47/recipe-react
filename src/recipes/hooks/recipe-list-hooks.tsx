@@ -23,7 +23,9 @@ export const useRecipeList: UseRecipes = () => {
   }, []);
 
   let subscription = useMemo(() => {
+    console.log("subscribing");
     return recipeBloc.listen(state => {
+      console.log(state);
       if (state.status === RecipeStatus.CREATED
           || state.status === RecipeStatus.DELETED
           || state.status == RecipeStatus.UPDATED) {
