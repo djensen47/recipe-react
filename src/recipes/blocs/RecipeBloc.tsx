@@ -16,6 +16,10 @@ export class RecipeCreateEvent implements RecipeEvent {
   constructor(public recipe: Recipe) {}
 }
 
+export class RecipeUpdateEvent implements RecipeEvent {
+  constructor(public recipe: Recipe) {}
+}
+
 export class RecipeDeleteEvent implements RecipeEvent {
   constructor(public recipe: Recipe) {}
 }
@@ -44,9 +48,18 @@ export class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
         break;
       case RecipeDeleteEvent:
         yield await this._mapRecipeDeleteEventToState((event as RecipeDeleteEvent).recipe);
-        // yield await this._mapRecipesEventFetchToState();
         break;
+      case RecipeUpdateEvent:
+        yield await this.mapRecipeUpdateEventToState(event as RecipeUpdateEvent);
     }
+  }
+
+  private async mapRecipeUpdateEventToState(event: RecipeUpdateEvent): Promise<RecipeState> {
+    let response = await this.api.recipesUpdate(event.recipe.id, event.recipe);
+    if (response.status >= 400) {
+      return new RecipeState(RecipeStatus.FAILURE, undefined, response.statusText);
+    }
+    return new RecipeState(RecipeStatus.UPDATED, response.data);
   }
 
   private async mapRecipeCreateEventToState(event: RecipeCreateEvent): Promise<RecipeState> {

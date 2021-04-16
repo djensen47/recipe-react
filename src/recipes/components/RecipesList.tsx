@@ -4,17 +4,20 @@ import { RecipeListItem } from './RecipeListItem';
 import { RecipeDeleteDialog } from './RecipeDeleteDialog';
 import { useRecipeList } from '../hooks/recipe-list-hooks';
 import { useRecipeActions } from '../hooks/recipe-hooks';
+import { RecipeDialog } from './RecipeDialog';
 
 export const RecipesList: React.FC = () => {
   const [recipeToDelete, setRecipeToDelete] = useState<Recipe | undefined>();
-  const {deleteRecipe} = useRecipeActions();
+  const [recipeToEdit, setRecipeToUpdate] = useState<Recipe | undefined>();
+  const { deleteRecipe, updateRecipe } = useRecipeActions();
 
-  const {recipes} = useRecipeList();
+  const { recipes } = useRecipeList();
 
   const hideDelete = () => setRecipeToDelete(undefined);
   const showDelete = (recipe: Recipe) => setRecipeToDelete(recipe);
 
-  const showEdit = (recipe: Recipe) => { };
+  const hideUpdate = () => setRecipeToUpdate(undefined);
+  const showUpdate = (recipe: Recipe) => setRecipeToUpdate(recipe);
 
   const handleDeleteRecipe = () => {
     if (!!recipeToDelete) {
@@ -23,15 +26,25 @@ export const RecipesList: React.FC = () => {
     hideDelete();
   };
 
+  const handleEditRecipe = (recipe: Recipe) => {
+    updateRecipe(recipe);
+    hideUpdate();
+  };
+
   return (
     <>
       {recipes?.map(recipe => (
-        <RecipeListItem key={recipe.id} recipe={recipe} onEdit={showEdit} onDelete={showDelete} />
+        <RecipeListItem key={recipe.id} recipe={recipe} onEdit={showUpdate} onDelete={showDelete} />
       ))}
-      
+
       {recipeToDelete && (
         <RecipeDeleteDialog recipe={recipeToDelete} onHide={hideDelete} onConfirm={handleDeleteRecipe} />
       )}
+
+      {recipeToEdit && (
+        <RecipeDialog recipe={recipeToEdit} onHide={hideUpdate} onConfirm={handleEditRecipe} />
+      )}
+
     </>
   );
 }
