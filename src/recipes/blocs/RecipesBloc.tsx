@@ -10,11 +10,7 @@ export interface RecipesEvent {};
 export class RecipesFetchEvent implements RecipesEvent {};
 
 export class RecipeDeleteEvent implements RecipesEvent {
-  recipe: Recipe;
-
-  constructor(recipe: Recipe) {
-    this.recipe = recipe;
-  }
+  constructor(public recipe: Recipe) {}
 }
 
 export interface RecipesState {

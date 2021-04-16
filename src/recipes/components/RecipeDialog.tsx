@@ -1,6 +1,7 @@
 import { Box, Button, Card, CardBody, CardFooter, CardHeader, Form, FormField, Layer, List, Text, TextArea, TextInput } from 'grommet';
 import { Close, Trash } from 'grommet-icons';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { RecipeBloc } from '../blocs/RecipeBloc';
 import { Recipe } from '../client';
 
 export const RecipeDialog: React.FC<{
@@ -8,6 +9,7 @@ export const RecipeDialog: React.FC<{
   onHide: () => void,
   onConfirm: (recipe: Recipe) => void
 }> = ({ recipe, onHide, onConfirm }) => {
+  // const recipesBloc: RecipeBloc = useContext(RecipeContext);
   const [name, setName] = useState(recipe?.name ?? '')
   const [ingredientName, setIngredientName] = useState('');
   const [description, setDescription] = useState(recipe?.description ?? '')
