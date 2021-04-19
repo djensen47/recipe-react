@@ -5,12 +5,7 @@ import { RecipeListState } from "./RecipeListState";
 import { RecipeListStatus } from "./RecipeListStatus";
 
 
-export interface RecipesState {
-  //TODO: this should be it's own interface and not re-using the generated interface
-  recipes?: Recipe[];
-}
-
-export class RecipeListBloc extends Bloc<RecipeListEvent, RecipesState> {
+export class RecipeListBloc extends Bloc<RecipeListEvent, RecipeListState> {
   api: RecipesApi;
 
   constructor(api: RecipesApi) {
@@ -18,7 +13,7 @@ export class RecipeListBloc extends Bloc<RecipeListEvent, RecipesState> {
     this.api = api;
   }
 
-  async *mapEventToState(event: RecipeListEvent): AsyncIterableIterator<RecipesState> {
+  async *mapEventToState(event: RecipeListEvent): AsyncIterableIterator<RecipeListState> {
     switch(event.constructor) {
       case RecipeListFetchEvent:
         yield await this._mapRecipesEventFetchToState();
@@ -26,9 +21,9 @@ export class RecipeListBloc extends Bloc<RecipeListEvent, RecipesState> {
     }
   }
 
-  async _mapRecipesEventFetchToState(): Promise<RecipesState> {
+  async _mapRecipesEventFetchToState(): Promise<RecipeListState> {
     let response = await this.api.recipesList();
-    if (response.status >= 400) {
+    if (!response || response.status >= 400) {
       return new RecipeListState(RecipeListStatus.FAILURE, undefined)
     }
     //TODO: handle errors
