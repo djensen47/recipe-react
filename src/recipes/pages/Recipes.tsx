@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { RecipeBloc } from '../blocs/RecipeBloc';
-import { RecipesBloc } from '../blocs/RecipesBloc';
+import { RecipeListBloc } from '../blocs/RecipeListBloc';
 import { Configuration, RecipesApi } from '../client';
 import { RecipeContext, RecipesContext } from '../RecipesContext';
 import { RecipeListPage } from './RecipeListPage';
@@ -9,7 +9,7 @@ import { RecipePage } from './RecipePage';
 
 export const Recipes: React.FC = () => {
   const recipesApi = new RecipesApi(new Configuration({ basePath: "http://localhost:8000" }));
-  const recipesBloc = new RecipesBloc(recipesApi);
+  const recipesBloc = new RecipeListBloc(recipesApi);
   const recipeBloc = new RecipeBloc(recipesApi);
 
   let { path } = useRouteMatch();

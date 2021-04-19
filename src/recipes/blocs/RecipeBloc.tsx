@@ -1,39 +1,9 @@
 import { Bloc } from "@felangel/bloc";
 import { Recipe, RecipesApi } from "../client";
+import { RecipeCreateEvent, RecipeDeleteEvent, RecipeEvent, RecipeUpdateEvent } from "./RecipeEvent";
+import { RecipeState } from "./RecipeState";
+import { RecipeStatus } from "./RecipeStatus";
 
-export enum RecipeStatus {
-  INITIAL = "initial",
-  PENDING = "pending",
-  CREATED = "created",
-  UPDATED = "updated",
-  DELETED = "deleted",
-  FAILURE = "failure"
-}
-
-export interface RecipeEvent { };
-
-export class RecipeCreateEvent implements RecipeEvent {
-  constructor(public recipe: Recipe) {}
-}
-
-export class RecipeUpdateEvent implements RecipeEvent {
-  constructor(public recipe: Recipe) {}
-}
-
-export class RecipeDeleteEvent implements RecipeEvent {
-  constructor(public recipe: Recipe) {}
-}
-
-export class RecipeState {
-  constructor(
-    public status: RecipeStatus,
-    public recipe?: Recipe,
-    public error?: string) {};
-
-    public copyWith(modifyObject: { [P in keyof this]?: this[P] }): this {
-      return Object.assign(Object.create(this.constructor.prototype), { ...this, ...modifyObject });
-   } 
-}
 
 export class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
   constructor(public api: RecipesApi) {

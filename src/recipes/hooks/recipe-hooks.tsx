@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { RecipeDeleteEvent, RecipeBloc, RecipeCreateEvent, RecipeUpdateEvent } from '../blocs/RecipeBloc';
+import { RecipeBloc } from '../blocs/RecipeBloc';
+import { RecipeDeleteEvent, RecipeCreateEvent, RecipeUpdateEvent } from '../blocs/RecipeEvent';
 import { Recipe } from '../client';
 import { RecipeContext } from '../RecipesContext';
 

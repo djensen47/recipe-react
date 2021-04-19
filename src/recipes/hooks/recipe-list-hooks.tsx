@@ -1,8 +1,11 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { RecipeBloc, RecipeState, RecipeStatus } from '../blocs/RecipeBloc';
-import { RecipesBloc, RecipesFetchEvent } from '../blocs/RecipesBloc';
+import { RecipeBloc } from '../blocs/RecipeBloc';
+import { RecipeState } from "../blocs/RecipeState";
+import { RecipeStatus } from "../blocs/RecipeStatus";
+import { RecipeListBloc } from '../blocs/RecipeListBloc';
 import { Recipe } from '../client';
 import { RecipeContext, RecipesContext } from '../RecipesContext';
+import { RecipeListFetchEvent } from '../blocs/RecipeListEvent';
 
 type UseRecipes = () => {
   recipes: Recipe[];
@@ -13,13 +16,13 @@ type UseRecipesActions = () => {
 }
 
 export const useRecipeList: UseRecipes = () => {
-  const recipesBloc: RecipesBloc = useContext(RecipesContext);
+  const recipesBloc: RecipeListBloc = useContext(RecipesContext);
   const recipeBloc: RecipeBloc = useContext(RecipeContext);
   const [recipes, setRecipes] = useState([] as Recipe[]);
   recipesBloc.listen(state => setRecipes(state.recipes ?? []));
 
   useEffect(() => {
-    recipesBloc.add(new RecipesFetchEvent());
+    recipesBloc.add(new RecipeListFetchEvent());
   }, []);
 
   let subscription = useMemo(() => {
@@ -29,7 +32,7 @@ export const useRecipeList: UseRecipes = () => {
       if (state.status === RecipeStatus.CREATED
           || state.status === RecipeStatus.DELETED
           || state.status == RecipeStatus.UPDATED) {
-          recipesBloc.add(new RecipesFetchEvent());
+          recipesBloc.add(new RecipeListFetchEvent());
       }
     });
   }, []);
@@ -42,9 +45,9 @@ export const useRecipeList: UseRecipes = () => {
 };
 
 export const useRecipeListActions: UseRecipesActions = () => {
-  const recipesBloc: RecipesBloc = useContext(RecipesContext);
+  const recipesBloc: RecipeListBloc = useContext(RecipesContext);
 
   return {
-    fetchRecipes: () => recipesBloc.add(new RecipesFetchEvent())
+    fetchRecipes: () => recipesBloc.add(new RecipeListFetchEvent())
   }
 };

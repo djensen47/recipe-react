@@ -1,10 +1,10 @@
 import React from 'react';
 import { RecipeBloc } from './blocs/RecipeBloc';
-import { RecipesBloc } from './blocs/RecipesBloc';
+import { RecipeListBloc } from './blocs/RecipeListBloc';
 import { RecipesApi } from './client';
 
 const recipesApi = new RecipesApi();
-const recipesBloc = new RecipesBloc(recipesApi);
+const recipesBloc = new RecipeListBloc(recipesApi);
 const recipeBloc = new RecipeBloc(recipesApi);
 
 export const RecipeContext = React.createContext(recipeBloc);
