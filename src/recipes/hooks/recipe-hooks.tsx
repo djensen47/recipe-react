@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { RecipeBloc } from '../blocs/RecipeBloc';
 import { RecipeDeleteEvent, RecipeCreateEvent, RecipeUpdateEvent } from '../blocs/RecipeEvent';
 import { Recipe } from '../client';
-import { useRecipeBloc } from '../RecipesContext';
+import { useRecipeBloc } from '../RecipeContext';
 
 type UseRecipeActions = () => {
   createRecipe: (recipe: Recipe) => void;

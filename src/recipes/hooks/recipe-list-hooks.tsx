@@ -4,7 +4,8 @@ import { RecipeState } from "../blocs/RecipeState";
 import { RecipeStatus } from "../blocs/RecipeStatus";
 import { RecipeListBloc } from '../blocs/RecipeListBloc';
 import { Recipe } from '../client';
-import { useRecipeBloc, useRecipeListBloc } from '../RecipesContext';
+import { useRecipeBloc } from '../RecipeContext';
+import { useRecipeListBloc } from '../RecipeListContext';
 import { RecipeListFetchEvent } from '../blocs/RecipeListEvent';
 
 type UseRecipes = () => {
@@ -26,9 +27,7 @@ export const useRecipeList: UseRecipes = () => {
   }, []);
 
   let subscription = useMemo(() => {
-    console.log("subscribing");
     return recipeBloc.listen(state => {
-      console.log(state);
       if (state.status === RecipeStatus.CREATED
           || state.status === RecipeStatus.DELETED
           || state.status == RecipeStatus.UPDATED) {
