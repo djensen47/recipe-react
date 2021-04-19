@@ -4,8 +4,8 @@ import { RecipeState } from "../blocs/RecipeState";
 import { RecipeStatus } from "../blocs/RecipeStatus";
 import { RecipeListBloc } from '../blocs/RecipeListBloc';
 import { Recipe } from '../client';
-import { useRecipeBloc } from '../RecipeContext';
-import { useRecipeListBloc } from '../RecipeListContext';
+import { useRecipeBloc } from '../context/RecipeContext';
+import { useRecipeListBloc } from '../context/RecipeListContext';
 import { RecipeListFetchEvent } from '../blocs/RecipeListEvent';
 
 type UseRecipes = () => {

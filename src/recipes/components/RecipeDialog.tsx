@@ -1,7 +1,6 @@
 import { Box, Button, Card, CardBody, CardFooter, CardHeader, Form, FormField, Layer, List, Text, TextArea, TextInput } from 'grommet';
 import { Close, Trash } from 'grommet-icons';
-import React, { useContext, useState } from 'react';
-import { RecipeBloc } from '../blocs/RecipeBloc';
+import React, { useState } from 'react';
 import { Recipe } from '../client';
 
 export const RecipeDialog: React.FC<{

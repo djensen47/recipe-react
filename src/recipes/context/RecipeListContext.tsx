@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { RecipeListBloc } from './blocs/RecipeListBloc';
-import { Configuration, RecipesApi } from './client';
+import { RecipeListBloc } from '../blocs/RecipeListBloc';
+import { Configuration, RecipesApi } from '../client';
 
 
 const RecipeListContext = React.createContext<RecipeListBloc | null>(null);
