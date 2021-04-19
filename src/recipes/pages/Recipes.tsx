@@ -3,7 +3,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { RecipeBloc } from '../blocs/RecipeBloc';
 import { RecipeListBloc } from '../blocs/RecipeListBloc';
 import { Configuration, RecipesApi } from '../client';
-import { RecipeContext, RecipesContext } from '../RecipesContext';
+import { RecipeContextProvider, RecipeListContextProvider} from '../RecipesContext';
 import { RecipeListPage } from './RecipeListPage';
 import { RecipePage } from './RecipePage';
 
@@ -16,8 +16,8 @@ export const Recipes: React.FC = () => {
 
   return (
     <>
-      <RecipesContext.Provider value={recipesBloc}>
-        <RecipeContext.Provider value={recipeBloc}>
+      <RecipeListContextProvider>
+        <RecipeContextProvider>
           <Switch>
             <Route exact path={path}>
               <RecipeListPage />
@@ -26,8 +26,8 @@ export const Recipes: React.FC = () => {
               <RecipePage />
             </Route>
           </Switch>
-        </RecipeContext.Provider>
-      </RecipesContext.Provider>
+        </RecipeContextProvider>
+      </RecipeListContextProvider>
     </>
   )
 }

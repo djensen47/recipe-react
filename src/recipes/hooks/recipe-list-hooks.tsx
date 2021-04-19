@@ -4,7 +4,7 @@ import { RecipeState } from "../blocs/RecipeState";
 import { RecipeStatus } from "../blocs/RecipeStatus";
 import { RecipeListBloc } from '../blocs/RecipeListBloc';
 import { Recipe } from '../client';
-import { RecipeContext, RecipesContext } from '../RecipesContext';
+import { useRecipeBloc, useRecipeListBloc } from '../RecipesContext';
 import { RecipeListFetchEvent } from '../blocs/RecipeListEvent';
 
 type UseRecipes = () => {
@@ -16,8 +16,8 @@ type UseRecipesActions = () => {
 }
 
 export const useRecipeList: UseRecipes = () => {
-  const recipesBloc: RecipeListBloc = useContext(RecipesContext);
-  const recipeBloc: RecipeBloc = useContext(RecipeContext);
+  const recipesBloc: RecipeListBloc = useRecipeListBloc();
+  const recipeBloc: RecipeBloc = useRecipeBloc();
   const [recipes, setRecipes] = useState([] as Recipe[]);
   recipesBloc.listen(state => setRecipes(state.recipes ?? []));
 
@@ -45,7 +45,7 @@ export const useRecipeList: UseRecipes = () => {
 };
 
 export const useRecipeListActions: UseRecipesActions = () => {
-  const recipesBloc: RecipeListBloc = useContext(RecipesContext);
+  const recipesBloc: RecipeListBloc = useRecipeListBloc();
 
   return {
     fetchRecipes: () => recipesBloc.add(new RecipeListFetchEvent())
