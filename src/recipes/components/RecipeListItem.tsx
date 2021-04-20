@@ -1,8 +1,9 @@
 import React, { MouseEvent, useState } from 'react';
 import { Box, Button, Text, ThemeContext } from 'grommet';
 import { Edit, Trash } from 'grommet-icons';
-import styled from 'styled-components';
 import { Recipe } from '../client';
+import { TextItalic, TextNoBreak } from '../../common/components/styled';
+
 
 export const RecipeListItem: React.FC<{
   recipe: Recipe,
@@ -25,15 +26,6 @@ export const RecipeListItem: React.FC<{
     evt.stopPropagation();
     onEdit(recipe);
   }
-  // probably don't need this but nice to know it's easy to change Grommet's
-  // default styles without issue
-  const TextNoBreak = styled(Text)`
-    white-space: no-break;
-  `;
-
-  const TextItalic = styled(Text)`
-    font-style: italic;
-  `;
 
   return (
     <ThemeContext.Extend value={{global:{focus: {border: {color: "none"}}}}}>
