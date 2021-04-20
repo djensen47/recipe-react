@@ -37,7 +37,8 @@ export const RecipeListItem: React.FC<{
 
   return (
     <ThemeContext.Extend value={{global:{focus: {border: {color: "none"}}}}}>
-      <Box
+      <Box 
+        role="listitem"
         pad="medium"
         border={{ side: "bottom", color: "light-3" }}
         hoverIndicator={true}

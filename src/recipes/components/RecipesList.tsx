@@ -5,6 +5,7 @@ import { RecipeDeleteDialog } from './RecipeDeleteDialog';
 import { useRecipeList } from '../hooks/recipe-list-hooks';
 import { useRecipeActions } from '../hooks/recipe-hooks';
 import { RecipeDialog } from './RecipeDialog';
+import { Box } from 'grommet';
 
 export const RecipesList: React.FC = () => {
   const [recipeToDelete, setRecipeToDelete] = useState<Recipe | undefined>();
@@ -33,9 +34,11 @@ export const RecipesList: React.FC = () => {
 
   return (
     <>
-      {recipes?.map(recipe => (
-        <RecipeListItem key={recipe.id} recipe={recipe} onEdit={showUpdate} onDelete={showDelete} />
-      ))}
+      <Box role="list">
+        {recipes?.map(recipe => (
+          <RecipeListItem key={recipe.id} recipe={recipe} onEdit={showUpdate} onDelete={showDelete} />
+        ))}
+      </Box>
 
       {recipeToDelete && (
         <RecipeDeleteDialog recipe={recipeToDelete} onHide={hideDelete} onConfirm={handleDeleteRecipe} />
