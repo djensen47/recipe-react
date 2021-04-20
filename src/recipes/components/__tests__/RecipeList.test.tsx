@@ -32,5 +32,4 @@ describe("RecipeList (integration test)", () => {
       expect(elem).toBeInTheDocument();
     }
   });
-
 });

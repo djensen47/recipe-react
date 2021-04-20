@@ -44,7 +44,7 @@ export class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
 
   async _mapRecipeDeleteEventToState(recipe: Recipe): Promise<RecipeState> {
     try {
-      let response = await this.api.recipesDestroy(recipe.id);
+      await this.api.recipesDestroy(recipe.id);
       return new RecipeState(RecipeStatus.DELETED);
     } catch(err) {
       return new RecipeState(RecipeStatus.FAILURE);

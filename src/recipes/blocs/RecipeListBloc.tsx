@@ -1,5 +1,5 @@
 import { Bloc } from "@felangel/bloc";
-import { Recipe, RecipesApi } from "../client";
+import { RecipesApi } from "../client";
 import { RecipeListEvent, RecipeListFetchEvent } from "./RecipeListEvent";
 import { RecipeListState } from "./RecipeListState";
 import { RecipeListStatus } from "./RecipeListStatus";
