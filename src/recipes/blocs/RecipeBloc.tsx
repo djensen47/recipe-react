@@ -13,7 +13,7 @@ export class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
   async *mapEventToState(event: RecipeEvent): AsyncIterableIterator<RecipeState> {
     switch(event.constructor) {
       case RecipeCreateEvent:
-        yield new RecipeState(RecipeStatus.PENDING);
+        // yield new RecipeState(RecipeStatus.PENDING);
         yield await this.mapRecipeCreateEventToState(event as RecipeCreateEvent);
         break;
       case RecipeDeleteEvent:
@@ -25,27 +25,30 @@ export class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
   }
 
   private async mapRecipeUpdateEventToState(event: RecipeUpdateEvent): Promise<RecipeState> {
-    let response = await this.api.recipesUpdate(event.recipe.id, event.recipe);
-    if (response.status >= 400) {
-      return new RecipeState(RecipeStatus.FAILURE, undefined, response.statusText);
+    try {
+      let response = await this.api.recipesUpdate(event.recipe.id, event.recipe);
+      return new RecipeState(RecipeStatus.UPDATED, response.data);
+    } catch(err) {
+      return new RecipeState(RecipeStatus.FAILURE);
     }
-    return new RecipeState(RecipeStatus.UPDATED, response.data);
   }
 
   private async mapRecipeCreateEventToState(event: RecipeCreateEvent): Promise<RecipeState> {
-    let response = await this.api.recipesCreate(event.recipe);
-    if (response.status >= 400) {
-      return new RecipeState(RecipeStatus.FAILURE, undefined, response.statusText);
+    try {
+      let response = await this.api.recipesCreate(event.recipe);
+      return new RecipeState(RecipeStatus.CREATED, response.data);
+    } catch(err) {
+      return new RecipeState(RecipeStatus.FAILURE);
     }
-    return new RecipeState(RecipeStatus.CREATED, response.data);
   }
 
   async _mapRecipeDeleteEventToState(recipe: Recipe): Promise<RecipeState> {
-    let response = await this.api.recipesDestroy(recipe.id);
-    if (response.status >= 400) {
-      return new RecipeState(RecipeStatus.FAILURE, undefined, response.statusText);
+    try {
+      let response = await this.api.recipesDestroy(recipe.id);
+      return new RecipeState(RecipeStatus.DELETED);
+    } catch(err) {
+      return new RecipeState(RecipeStatus.FAILURE);
     }
-    return new RecipeState(RecipeStatus.DELETED);
   }
 
 }

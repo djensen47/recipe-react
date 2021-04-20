@@ -14,7 +14,7 @@ export class RecipeListBloc extends Bloc<RecipeListEvent, RecipeListState> {
   }
 
   async *mapEventToState(event: RecipeListEvent): AsyncIterableIterator<RecipeListState> {
-    switch(event.constructor) {
+    switch (event.constructor) {
       case RecipeListFetchEvent:
         yield await this._mapRecipesEventFetchToState();
         break;
@@ -22,12 +22,12 @@ export class RecipeListBloc extends Bloc<RecipeListEvent, RecipeListState> {
   }
 
   async _mapRecipesEventFetchToState(): Promise<RecipeListState> {
-    let response = await this.api.recipesList();
-    if (!response || response.status >= 400) {
+    try {
+      let response = await this.api.recipesList();
+      return new RecipeListState(RecipeListStatus.SUCCESS, response.data);
+    } catch (err) {
       return new RecipeListState(RecipeListStatus.FAILURE, undefined)
     }
-    //TODO: handle errors
-    return new RecipeListState(RecipeListStatus.SUCCESS, response.data);
   }
 
 }
