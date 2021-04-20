@@ -2,7 +2,7 @@ import React from "react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 
-export const recipeData = [{
+export const recipeTestData = [{
   "id": 1,
   "name": "BLTA Sandwich",
   "description": "A take on the classic",
@@ -40,6 +40,6 @@ export const recipeData = [{
 
 export const setupTestServer = () => setupServer(
   rest.get('/recipes', (_, res, ctx) => {
-    return res(ctx.json(recipeData));
+    return res(ctx.json(recipeTestData));
   })
 );
