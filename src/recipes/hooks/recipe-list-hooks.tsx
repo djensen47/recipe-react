@@ -19,13 +19,15 @@ export const useRecipeList: UseRecipes = () => {
   const recipeListBloc: RecipeListBloc = useRecipeListBloc();
   const recipeBloc: RecipeBloc = useRecipeBloc();
   const [recipes, setRecipes] = useState([] as Recipe[]);
-  recipeListBloc.listen(state => setRecipes(state.recipes ?? []));
+  const recipeListSubscription = useMemo(() => { 
+    return recipeListBloc.listen(state => setRecipes(state.recipes ?? [])); 
+  }, [recipeListBloc]);
 
   useEffect(() => {
     recipeListBloc.add(new RecipeListFetchEvent());
   }, [recipeListBloc]);
 
-  let subscription = useMemo(() => {
+  const recipeSubscription = useMemo(() => {
     return recipeBloc.listen(state => {
       if (state.status === RecipeStatus.CREATED
           || state.status === RecipeStatus.DELETED
@@ -36,7 +38,8 @@ export const useRecipeList: UseRecipes = () => {
   }, [recipeBloc, recipeListBloc]);
 
   useEffect(() => () => {
-    subscription.unsubscribe();
+    recipeSubscription.unsubscribe();
+    recipeListSubscription.unsubscribe();
   })
 
   return { recipes: recipes };
