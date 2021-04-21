@@ -73,7 +73,7 @@ export const RecipeDialog: React.FC<{
                     0: { border: "bottom" },
                     [ingredients.length - 1]: { border: false }
                   }}
-                  action={(_, index) => <Button plain onClick={() => removeIngredient(index)} icon={<Trash color="dark-6" />} />}
+                  action={(_, index) => <Button key={index} plain onClick={() => removeIngredient(index)} icon={<Trash color="dark-6" />} />}
                   data={ingredients}
                   primaryKey={item => item.name}
                 />
