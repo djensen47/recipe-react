@@ -1,5 +1,5 @@
 import React from "react";
-import { findAllByRole, findByText, fireEvent, getByLabelText, getByRole, render, screen } from "@testing-library/react";
+import { cleanup, findAllByRole, findByRole, findByText, fireEvent, getByRole, render, screen, waitFor } from "@testing-library/react";
 import { recipeTestData, setupTestServer } from "../../__mocks__/server";
 import { RecipesList } from "../RecipesList";
 import { RecipeListContextProvider } from "../../context/RecipeListContext";
@@ -16,17 +16,47 @@ const recipeList = (
   </Grommet>
 );
 
+describe("RecipeDialog (integration test)", () => {
+  const testServer = setupTestServer();
+
+  beforeAll(() => testServer.listen());
+  afterEach(() => {
+    testServer.resetHandlers()
+  });
+  afterAll(() => testServer.close());
+
+  test("should show error in recipe name field", async () => {
+    // render(recipeList);
+    const {unmount} = render(recipeList);
+
+    const items = await screen.findAllByRole("listitem", {name: /Recipe:/i});
+
+    fireEvent.mouseEnter(items[0]);
+    fireEvent.click(await findByRole(items[0], "button", { name: "edit" }));
+
+    const dialog = await screen.findByRole("dialog");
+    expect(dialog).toBeInTheDocument();
+
+    expect(await findByText(dialog, "Edit Recipe")).toBeInTheDocument();
+
+    // fireEvent.change(getByLabelText(dialog, "Name"))
+    unmount();
+  });
+});
+
 describe("RecipeList (integration test)", () => {
   const testServer = setupTestServer();
 
   beforeAll(() => testServer.listen());
-  afterEach(() => testServer.resetHandlers());
+  afterEach(() => {
+    testServer.resetHandlers()
+  });
   afterAll(() => testServer.close());
 
   test("should render RecipeList component", async () => {
     render(recipeList);
 
-    const items = await screen.findAllByRole("listitem");
+    const items = await screen.findAllByRole("listitem", {name: /Recipe:/i});
     expect(items).toHaveLength(recipeTestData.length);
     for (const recipe of recipeTestData) {
       let elem = await screen.findByText(recipe.name);
@@ -37,7 +67,7 @@ describe("RecipeList (integration test)", () => {
   test("should show ingredients on click", async () => {
     render(recipeList);
 
-    const items = await screen.findAllByRole("listitem");
+    const items = await screen.findAllByRole("listitem", {name: /Recipe:/i});
     expect(items).toHaveLength(recipeTestData.length);
 
     fireEvent.mouseEnter(items[0]);
@@ -53,11 +83,11 @@ describe("RecipeList (integration test)", () => {
   test("should open delete dialog", async () => {
     render(recipeList);
 
-    const items = await screen.findAllByRole("listitem");
-    expect(items).toHaveLength(3);
+    const items = await screen.findAllByRole("listitem", {name: /Recipe:/i});
+    expect(items).toHaveLength(recipeTestData.length);
 
     fireEvent.mouseEnter(items[0]);
-    fireEvent.click(getByRole(items[0], "button", {name: "delete"}));
+    fireEvent.click(await findByRole(items[0], "button", { name: "delete" }));
 
     const dialog = await screen.findByRole("dialog");
     expect(dialog).toBeInTheDocument();
@@ -66,5 +96,20 @@ describe("RecipeList (integration test)", () => {
     expect(text).toBeInTheDocument();
   });
 
-  test.skip("should open edit dialog", () => {});
+  test("should open edit dialog", async () => {
+    const { unmount } = render(recipeList);
+
+    const items = await screen.findAllByRole("listitem", {name: `Recipe: ${recipeTestData[0].name}`});
+
+    fireEvent.mouseEnter(items[0]);
+    const button = await findByRole(items[0], "button", { name: "edit" });
+    fireEvent.click(button);
+
+    const dialog = await screen.findByRole("dialog");
+    expect(dialog).toBeInTheDocument();
+
+    expect(await findByText(dialog, "Edit Recipe")).toBeInTheDocument();
+    unmount();
+  });
+
 });
