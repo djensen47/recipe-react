@@ -38,6 +38,7 @@ export const RecipeListItem: React.FC<{
         onMouseLeave={handleMouseOut}
         onClick={handleClick}
         focusIndicator={true}
+        a11yTitle={`Recipe: ${recipe.name}`}
       >
         <Box direction="row" justify="between">
           <Box direction="column">
