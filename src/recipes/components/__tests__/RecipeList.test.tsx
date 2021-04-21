@@ -1,5 +1,5 @@
 import React from "react";
-import { cleanup, findAllByRole, findByRole, findByText, fireEvent, getByRole, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, findAllByRole, findByLabelText, findByRole, findByText, fireEvent, getByLabelText, getByRole, render, screen, waitFor } from "@testing-library/react";
 import { recipeTestData, setupTestServer } from "../../__mocks__/server";
 import { RecipesList } from "../RecipesList";
 import { RecipeListContextProvider } from "../../context/RecipeListContext";
@@ -20,14 +20,11 @@ describe("RecipeDialog (integration test)", () => {
   const testServer = setupTestServer();
 
   beforeAll(() => testServer.listen());
-  afterEach(() => {
-    testServer.resetHandlers()
-  });
+  afterEach(() => { testServer.resetHandlers() });
   afterAll(() => testServer.close());
 
   test("should show error in recipe name field", async () => {
-    // render(recipeList);
-    const {unmount} = render(recipeList);
+    render(recipeList);
 
     const items = await screen.findAllByRole("listitem", {name: /Recipe:/i});
 
@@ -38,9 +35,10 @@ describe("RecipeDialog (integration test)", () => {
     expect(dialog).toBeInTheDocument();
 
     expect(await findByText(dialog, "Edit Recipe")).toBeInTheDocument();
-
-    // fireEvent.change(getByLabelText(dialog, "Name"))
-    unmount();
+    const nameField = await findByLabelText(dialog, "Name");
+    fireEvent.change(nameField, {target: {value: ''}});
+    fireEvent.focusOut(nameField);
+    expect(await findByText(dialog, "Required field")).toBeInTheDocument();
   });
 });
 
@@ -48,9 +46,7 @@ describe("RecipeList (integration test)", () => {
   const testServer = setupTestServer();
 
   beforeAll(() => testServer.listen());
-  afterEach(() => {
-    testServer.resetHandlers()
-  });
+  afterEach(() => testServer.resetHandlers());
   afterAll(() => testServer.close());
 
   test("should render RecipeList component", async () => {
@@ -97,7 +93,7 @@ describe("RecipeList (integration test)", () => {
   });
 
   test("should open edit dialog", async () => {
-    const { unmount } = render(recipeList);
+    render(recipeList);
 
     const items = await screen.findAllByRole("listitem", {name: `Recipe: ${recipeTestData[0].name}`});
 
@@ -109,7 +105,6 @@ describe("RecipeList (integration test)", () => {
     expect(dialog).toBeInTheDocument();
 
     expect(await findByText(dialog, "Edit Recipe")).toBeInTheDocument();
-    unmount();
   });
 
 });

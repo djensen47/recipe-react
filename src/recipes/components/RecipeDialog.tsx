@@ -56,8 +56,9 @@ export const RecipeDialog: React.FC<{
           <CardBody pad="medium" gap="small">
             <FormField
               label="Name"
+              htmlFor="name"
               name="name" width="medium" validate={[required]}>
-              <TextInput name="name" value={name} onChange={evt => setName(evt.target.value)} />
+              <TextInput id="name" name="name" value={name} onChange={evt => setName(evt.target.value)} />
             </FormField>
             <FormField label="Description" htmlFor="input" width="medium">
               <TextArea name="description" value={description} onChange={evt => setDescription(evt.target.value)} />
