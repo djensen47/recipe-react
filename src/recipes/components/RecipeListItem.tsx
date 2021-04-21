@@ -46,15 +46,15 @@ export const RecipeListItem: React.FC<{
           </Box>
           {showButtons && (
             <Box direction="row" align="start" gap="small">
-              <Button plain icon={<Edit color="dark-6" />} onClick={handleClickEdit} />
-              <Button plain icon={<Trash color="dark-6" />} onClick={handleClickDelete} />
+              <Button plain icon={<Edit color="dark-6" />} onClick={handleClickEdit} a11yTitle="edit"/>
+              <Button plain icon={<Trash color="dark-6" />} onClick={handleClickDelete} a11yTitle="delete"/>
             </Box>
           )}
         </Box>
         {showIngredients && (
           <Box direction="row" gap="small" wrap={true} margin={{top:"small"}}>
             {recipe.ingredients?.map(ingredient => (
-              <Box key={ingredient.name} pad={{vertical: "xxsmall", horizontal: "small"}} margin={{vertical: "xxsmall"}} flex="shrink" background="light-6" round="small">
+              <Box key={ingredient.name} pad={{vertical: "xxsmall", horizontal: "small"}} margin={{vertical: "xxsmall"}} flex="shrink" background="light-6" round="small" role="listitem">
                 <TextNoBreak size="xsmall" wordBreak="normal" truncate={false} >
                   {ingredient.name}
                 </TextNoBreak>

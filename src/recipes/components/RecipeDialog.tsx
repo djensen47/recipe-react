@@ -42,7 +42,7 @@ export const RecipeDialog: React.FC<{
 
   const verb = recipe ? "Edit" : "Create";
   return (
-    <Layer background="none" onClickOutside={onHide} onEsc={onHide} position="top" margin={{ top: "75px" }}>
+    <Layer role="dialog" background="none" onClickOutside={onHide} onEsc={onHide} position="top" margin={{ top: "75px" }}>
       <Form validate="blur" onSubmit={handleSubmit}>
         <Card background="light-1">
           <CardHeader pad="medium" background="light-4" justify="start">
